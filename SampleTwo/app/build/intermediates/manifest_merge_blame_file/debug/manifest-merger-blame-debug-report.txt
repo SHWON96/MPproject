@@ -1,0 +1,208 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.android.alarmclock" >
+4
+5    <uses-sdk android:minSdkVersion="21" />
+5-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml
+6
+7    <original-package android:name="com.android.alarmclock" />
+7-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:4:5-63
+7-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:4:23-60
+8
+9    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+9-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:6:5-81
+9-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:6:22-78
+10    <uses-permission android:name="android.permission.WAKE_LOCK" />
+10-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:7:5-67
+10-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:7:22-65
+11    <uses-permission android:name="android.permission.VIBRATE" />
+11-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:8:5-65
+11-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:8:22-63
+12    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+12-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:9:5-73
+12-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:9:22-70
+13    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+13-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:10:5-75
+13-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:10:22-72
+14    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+14-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:11:5-75
+14-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:11:22-72
+15
+16    <application
+16-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:13:5-91:19
+17        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
+17-->[com.android.support:support-compat:28.0.0] C:\Users\K\.gradle\caches\transforms-2\files-2.1\f14724208b5bfeeef0d6bdefe649bca7\support-compat-28.0.0\AndroidManifest.xml:22:18-91
+18        android:debuggable="true"
+19        android:icon="@drawable/ic_launcher_alarmclock"
+19-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:14:18-65
+20        android:label="@string/app_label"
+20-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:13:18-51
+21        android:testOnly="true" >
+22        <provider
+22-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:16:9-95
+23            android:name="com.android.alarmclock.AlarmProvider"
+23-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:16:19-47
+24            android:authorities="com.android.alarmclock" />
+24-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:16:48-92
+25
+26        <activity
+26-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:18:9-25:20
+27            android:name="com.android.alarmclock.AlarmClock"
+27-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:18:19-44
+28            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+28-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:19:17-87
+29            android:label="@string/app_label" >
+29-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:18:45-78
+30            <intent-filter>
+30-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:20:13-24:29
+31                <action android:name="android.intent.action.MAIN" />
+31-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:21:17-69
+31-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:21:25-66
+32
+33                <category android:name="android.intent.category.DEFAULT" />
+33-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:22:17-76
+33-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:22:27-73
+34                <category android:name="android.intent.category.LAUNCHER" />
+34-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:23:17-77
+34-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:23:27-74
+35            </intent-filter>
+36        </activity>
+37        <activity
+37-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:27:9-31:20
+38            android:name="com.android.alarmclock.SettingsActivity"
+38-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:27:19-50
+39            android:label="@string/settings" >
+39-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:27:51-83
+40            <intent-filter>
+40-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:28:13-30:29
+41                <action android:name="android.intent.action.MAIN" />
+41-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:21:17-69
+41-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:21:25-66
+42            </intent-filter>
+43        </activity>
+44        <activity
+44-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:33:9-34:90
+45            android:name="com.android.alarmclock.SetAlarm"
+45-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:33:19-42
+46            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+46-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:34:17-87
+47            android:label="@string/set_alarm" />
+47-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:33:43-76
+48        <activity
+48-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:36:9-41:89
+49            android:name="com.android.alarmclock.AlarmAlert"
+49-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:36:19-44
+50            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+50-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:41:17-87
+51            android:excludeFromRecents="true"
+51-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:37:17-50
+52            android:launchMode="singleInstance"
+52-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:39:17-52
+53            android:taskAffinity=""
+53-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:40:17-40
+54            android:theme="@style/alarm_alert" />
+54-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:38:17-51
+55
+56        <!--
+57             This activity is basically the same as AlarmAlert but with a more
+58             generic theme. It also shows as full screen (with status bar) but
+59             with the wallpaper background.
+60        -->
+61        <activity
+61-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:46:9-51:89
+62            android:name="com.android.alarmclock.AlarmAlertFullScreen"
+62-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:46:19-54
+63            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+63-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:51:17-87
+64            android:excludeFromRecents="true"
+64-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:47:17-50
+65            android:launchMode="singleInstance"
+65-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:49:17-52
+66            android:taskAffinity=""
+66-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:50:17-40
+67            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" />
+67-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:48:17-74
+68        <activity android:name="com.android.alarmclock.ClockPicker" />
+68-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:53:9-48
+68-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:53:19-45
+69
+70        <receiver android:name="com.android.alarmclock.AlarmReceiver" >
+70-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:55:9-61:20
+70-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:55:19-47
+71            <intent-filter>
+71-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:56:13-60:29
+72                <action android:name="com.android.alarmclock.ALARM_ALERT" />
+72-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:57:16-76
+72-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:57:24-73
+73                <action android:name="alarm_killed" />
+73-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:58:16-54
+73-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:58:24-51
+74                <action android:name="cancel_snooze" />
+74-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:59:16-55
+74-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:59:24-52
+75            </intent-filter>
+76        </receiver>
+77
+78        <!--
+79             This service receives the same intent as AlarmReceiver but it does
+80             not respond to the same broadcast. The AlarmReceiver will receive
+81             the alert broadcast and will start this service with the same
+82             intent. The service plays the alarm alert and vibrates the device.
+83             This allows the alert to continue playing even if another activity
+84             causes the AlarmAlert activity to pause.
+85        -->
+86        <service android:name="com.android.alarmclock.AlarmKlaxon" >
+86-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:69:9-73:19
+86-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:69:18-44
+87            <intent-filter>
+87-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:70:13-72:29
+88                <action android:name="com.android.alarmclock.ALARM_ALERT" />
+88-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:57:16-76
+88-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:57:24-73
+89            </intent-filter>
+90        </service>
+91
+92        <receiver android:name="com.android.alarmclock.AlarmInitReceiver" >
+92-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:75:9-82:20
+92-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:75:19-51
+93            <intent-filter>
+93-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:76:13-81:29
+94                <action android:name="android.intent.action.BOOT_COMPLETED" />
+94-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:77:17-79
+94-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:77:25-76
+95                <action android:name="android.intent.action.TIME_SET" />
+95-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:78:17-73
+95-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:78:25-70
+96                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+96-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:79:17-81
+96-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:79:25-78
+97                <action android:name="android.intent.action.LOCALE_CHANGED" />
+97-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:80:17-79
+97-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:80:25-76
+98            </intent-filter>
+99        </receiver>
+100        <receiver
+100-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:84:9-90:20
+101            android:name="com.android.alarmclock.AnalogAppWidgetProvider"
+101-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:84:19-57
+102            android:icon="@drawable/ic_widget_analog_clock"
+102-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:85:10-57
+103            android:label="@string/analog_gadget" >
+103-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:84:58-95
+104            <intent-filter>
+104-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:86:13-88:29
+105                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+105-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:87:17-84
+105-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:87:25-81
+106            </intent-filter>
+107
+108            <meta-data
+108-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:89:13-109
+109                android:name="android.appwidget.provider"
+109-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:89:24-65
+110                android:resource="@xml/analog_appwidget" />
+110-->C:\Users\K\AndroidStudioProjects\AlarmClock\app\src\main\AndroidManifest.xml:89:66-106
+111        </receiver>
+112    </application>
+113
+114</manifest>
