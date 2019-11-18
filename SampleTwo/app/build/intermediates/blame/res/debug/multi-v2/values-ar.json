@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\K\\AndroidStudioProjects\\AlarmClock\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ar\\values-ar.xml",
+            "outputFile": "C:\\Users\\cowgi\\Desktop\\University\\test\\mptest\\Alarm_test\\MPproject\\SampleTwo\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ar\\values-ar.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\K\\.gradle\\caches\\transforms-2\\files-2.1\\f14724208b5bfeeef0d6bdefe649bca7\\support-compat-28.0.0\\res\\values-ar\\values-ar.xml",
+                    "source": "C:\\Users\\cowgi\\.gradle\\caches\\transforms-2\\files-2.1\\f14724208b5bfeeef0d6bdefe649bca7\\support-compat-28.0.0\\res\\values-ar\\values-ar.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

@@ -1,7 +1,7 @@
-#Mon Nov 18 01:30:12 KST 2019
-base.0=C\:\\Users\\K\\AndroidStudioProjects\\AlarmClock\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\out\\classes.dex
+#Mon Nov 18 12:12:35 KST 2019
+base.0=C\:\\Users\\cowgi\\Desktop\\University\\test\\mptest\\Alarm_test\\MPproject\\SampleTwo\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\out\\classes.dex
 path.1=classes.dex
 renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
-base.1=C\:\\Users\\K\\AndroidStudioProjects\\AlarmClock\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\out\\classes.dex
+base.1=C\:\\Users\\cowgi\\Desktop\\University\\test\\mptest\\Alarm_test\\MPproject\\SampleTwo\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\out\\classes.dex
