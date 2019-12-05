@@ -37,7 +37,6 @@ import org.tensorflow.lite.examples.detection.customview.OverlayView;
 import org.tensorflow.lite.examples.detection.customview.OverlayView.DrawCallback;
 import org.tensorflow.lite.examples.detection.env.BorderedText;
 import org.tensorflow.lite.examples.detection.env.ImageUtils;
-import org.tensorflow.lite.examples.detection.env.Logger;
 import org.tensorflow.lite.examples.detection.tflite.Classifier;
 import org.tensorflow.lite.examples.detection.tflite.TFLiteObjectDetectionAPIModel;
 import org.tensorflow.lite.examples.detection.tracking.MultiBoxTracker;
@@ -47,7 +46,7 @@ import org.tensorflow.lite.examples.detection.tracking.MultiBoxTracker;
  * objects.
  */
 public class DetectorActivity extends CameraActivity implements OnImageAvailableListener {
-  private static final Logger LOGGER = new Logger();
+  //private static final Logger LOGGER = new Logger();
 
   // Configuration values for the prepackaged SSD model.
   private static final int TF_OD_API_INPUT_SIZE = 300;
@@ -105,7 +104,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
       cropSize = TF_OD_API_INPUT_SIZE;
     } catch (final IOException e) {
       e.printStackTrace();
-      LOGGER.e(e, "Exception initializing classifier!");
+      //LOGGER.e(e, "Exception initializing classifier!");
       Toast toast =
           Toast.makeText(
               getApplicationContext(), "Classifier could not be initialized", Toast.LENGTH_SHORT);
@@ -117,9 +116,9 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     previewHeight = size.getHeight();
 
     sensorOrientation = rotation - getScreenOrientation();
-    LOGGER.i("Camera orientation relative to screen canvas: %d", sensorOrientation);
+    //LOGGER.i("Camera orientation relative to screen canvas: %d", sensorOrientation);
 
-    LOGGER.i("Initializing at size %dx%d", previewWidth, previewHeight);
+    //LOGGER.i("Initializing at size %dx%d", previewWidth, previewHeight);
     rgbFrameBitmap = Bitmap.createBitmap(previewWidth, previewHeight, Config.ARGB_8888);
     croppedBitmap = Bitmap.createBitmap(cropSize, cropSize, Config.ARGB_8888);
 
@@ -161,7 +160,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
       return;
     }
     computingDetection = true;
-    LOGGER.i("Preparing image " + currTimestamp + " for detection in bg thread.");
+    //LOGGER.i("Preparing image " + currTimestamp + " for detection in bg thread.");
 
     rgbFrameBitmap.setPixels(getRgbBytes(), 0, previewWidth, 0, 0, previewWidth, previewHeight);
 
@@ -178,7 +177,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
         new Runnable() {
           @Override
           public void run() {
-            LOGGER.i("Running detection on image " + currTimestamp);
+            //LOGGER.i("Running detection on image " + currTimestamp);
             final long startTime = SystemClock.uptimeMillis();
             final List<Classifier.Recognition> results = detector.recognizeImage(croppedBitmap);
             lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;

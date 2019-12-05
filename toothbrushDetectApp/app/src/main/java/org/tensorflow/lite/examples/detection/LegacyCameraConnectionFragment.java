@@ -34,10 +34,9 @@ import java.io.IOException;
 import java.util.List;
 import org.tensorflow.lite.examples.detection.customview.AutoFitTextureView;
 import org.tensorflow.lite.examples.detection.env.ImageUtils;
-import org.tensorflow.lite.examples.detection.env.Logger;
 
 public class LegacyCameraConnectionFragment extends Fragment {
-  private static final Logger LOGGER = new Logger();
+  //private static final Logger LOGGER = new Logger();
   /** Conversion from screen rotation to JPEG orientation. */
   private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
 
@@ -175,7 +174,7 @@ public class LegacyCameraConnectionFragment extends Fragment {
       backgroundThread.join();
       backgroundThread = null;
     } catch (final InterruptedException e) {
-      LOGGER.e(e, "Exception!");
+      //LOGGER.e(e, "Exception!");
     }
   }
 

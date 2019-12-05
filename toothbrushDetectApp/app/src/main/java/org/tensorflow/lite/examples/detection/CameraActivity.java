@@ -38,7 +38,7 @@ import androidx.annotation.NonNull;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
+
 import android.util.Size;
 import android.view.Surface;
 import android.view.View;
@@ -51,14 +51,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.nio.ByteBuffer;
 import org.tensorflow.lite.examples.detection.env.ImageUtils;
-import org.tensorflow.lite.examples.detection.env.Logger;
 
 public abstract class CameraActivity extends AppCompatActivity
     implements OnImageAvailableListener,
         Camera.PreviewCallback,
         CompoundButton.OnCheckedChangeListener,
         View.OnClickListener {
-  private static final Logger LOGGER = new Logger();
+  //private static final Logger LOGGER = new Logger();
 
   private static final int PERMISSIONS_REQUEST = 1;
 
@@ -88,7 +87,7 @@ public abstract class CameraActivity extends AppCompatActivity
 
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
-    LOGGER.d("onCreate " + this);
+    //LOGGER.d("onCreate " + this);
     super.onCreate(null);
     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -186,7 +185,7 @@ public abstract class CameraActivity extends AppCompatActivity
   @Override
   public void onPreviewFrame(final byte[] bytes, final Camera camera) {
     if (isProcessingFrame) {
-      LOGGER.w("Dropping frame!");
+      //LOGGER.w("Dropping frame!");
       return;
     }
 
@@ -200,7 +199,7 @@ public abstract class CameraActivity extends AppCompatActivity
         onPreviewSizeChosen(new Size(previewSize.width, previewSize.height), 90);
       }
     } catch (final Exception e) {
-      LOGGER.e(e, "Exception!");
+      //LOGGER.e(e, "Exception!");
       return;
     }
 
@@ -284,7 +283,7 @@ public abstract class CameraActivity extends AppCompatActivity
 
       processImage();
     } catch (final Exception e) {
-      LOGGER.e(e, "Exception!");
+      //LOGGER.e(e, "Exception!");
       Trace.endSection();
       return;
     }
@@ -293,13 +292,13 @@ public abstract class CameraActivity extends AppCompatActivity
 
   @Override
   public synchronized void onStart() {
-    LOGGER.d("onStart " + this);
+    //LOGGER.d("onStart " + this);
     super.onStart();
   }
 
   @Override
   public synchronized void onResume() {
-    LOGGER.d("onResume " + this);
+    //LOGGER.d("onResume " + this);
     super.onResume();
 
     handlerThread = new HandlerThread("inference");
@@ -309,7 +308,7 @@ public abstract class CameraActivity extends AppCompatActivity
 
   @Override
   public synchronized void onPause() {
-    LOGGER.d("onPause " + this);
+    //LOGGER.d("onPause " + this);
 
     handlerThread.quitSafely();
     try {
@@ -317,7 +316,7 @@ public abstract class CameraActivity extends AppCompatActivity
       handlerThread = null;
       handler = null;
     } catch (final InterruptedException e) {
-      LOGGER.e(e, "Exception!");
+      //LOGGER.e(e, "Exception!");
     }
 
     super.onPause();
@@ -325,13 +324,13 @@ public abstract class CameraActivity extends AppCompatActivity
 
   @Override
   public synchronized void onStop() {
-    LOGGER.d("onStop " + this);
+    //LOGGER.d("onStop " + this);
     super.onStop();
   }
 
   @Override
   public synchronized void onDestroy() {
-    LOGGER.d("onDestroy " + this);
+    //LOGGER.d("onDestroy " + this);
     super.onDestroy();
   }
 
@@ -413,11 +412,11 @@ public abstract class CameraActivity extends AppCompatActivity
             (facing == CameraCharacteristics.LENS_FACING_EXTERNAL)
                 || isHardwareLevelSupported(
                     characteristics, CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL);
-        LOGGER.i("Camera API lv2?: %s", useCamera2API);
+        //LOGGER.i("Camera API lv2?: %s", useCamera2API);
         return cameraId;
       }
     } catch (CameraAccessException e) {
-      LOGGER.e(e, "Not allowed to access camera");
+      //LOGGER.e(e, "Not allowed to access camera");
     }
 
     return null;
@@ -458,7 +457,7 @@ public abstract class CameraActivity extends AppCompatActivity
     for (int i = 0; i < planes.length; ++i) {
       final ByteBuffer buffer = planes[i].getBuffer();
       if (yuvBytes[i] == null) {
-        LOGGER.d("Initializing buffer %d at size %d", i, buffer.capacity());
+        //LOGGER.d("Initializing buffer %d at size %d", i, buffer.capacity());
         yuvBytes[i] = new byte[buffer.capacity()];
       }
       buffer.get(yuvBytes[i]);
