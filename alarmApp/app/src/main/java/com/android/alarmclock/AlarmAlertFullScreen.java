@@ -28,10 +28,9 @@ import android.content.Context;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +40,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 import android.widget.TextView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import java.util.Calendar;
 
@@ -70,9 +75,23 @@ public class AlarmAlertFullScreen extends Activity {
         }
     };
 
+    private InterstitialAd mInterstitialAd;
+
     @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+
+        // Set ads
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {}
+        });
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        // For the build and testing, test ad should be set.
+        // For the production
+        // ca-app-pub-8933690005967310/9685842587
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         mAlarm = getIntent().getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
 
@@ -88,8 +107,7 @@ public class AlarmAlertFullScreen extends Activity {
         final Window win = getWindow();
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                 | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-        // Turn on the screen unless we are being launched from the AlarmAlert
-        // subclass.
+        // Turn on the screen unless we are being launched from the AlarmAlert subclass.
         if (!getIntent().getBooleanExtra(SCREEN_OFF, false)) {
             win.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                     | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
@@ -112,7 +130,7 @@ public class AlarmAlertFullScreen extends Activity {
 
         setContentView(inflater.inflate(R.layout.alarm_alert, null));
 
-        /* set clock */
+        // set clock
         int face = 0;
         ViewGroup clockView = (ViewGroup) findViewById(R.id.clockView);
         inflater.inflate(AlarmClock.CLOCKS[face], clockView);
@@ -121,17 +139,19 @@ public class AlarmAlertFullScreen extends Activity {
             ((DigitalClock) clockLayout).setAnimate();
         }
 
-        /* snooze behavior: pop a snooze confirmation view, kick alarm
-           manager. */
+        // snooze behavior: pop a snooze confirmation view, kick alarm manager.
         Button snooze = (Button) findViewById(R.id.snooze);
         snooze.requestFocus();
         snooze.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                }
                 snooze();
             }
         });
 
-        /* dismiss button: close notification */
+        // dismiss button: close notification
         findViewById(R.id.dismiss).setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
@@ -139,7 +159,7 @@ public class AlarmAlertFullScreen extends Activity {
                     }
                 });
 
-        /* Set the title from the passed in alarm */
+        // Set the title from the passed in alarm
         setTitle();
     }
 
@@ -170,10 +190,7 @@ public class AlarmAlertFullScreen extends Activity {
         PendingIntent broadcast =
                 PendingIntent.getBroadcast(this, mAlarm.id, cancelSnooze, 0);
         NotificationManager nm = getNotificationManager();
-        /**
-         * Notification n = new Notification(R.drawable.stat_notify_alarm, label, 0);
-         * n.setLatestEventInfo(this, label, getString(R.string.alarm_notify_snooze_text, Alarms.formatTime(this, c)), broadcast);
-         */
+
         Notification n = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.stat_notify_alarm)
                 .setTicker(label)
@@ -220,10 +237,7 @@ public class AlarmAlertFullScreen extends Activity {
         finish();
     }
 
-    /**
-     * this is called when a second alarm is triggered while a
-     * previous alert window is still active.
-     */
+    // This is called when a second alarm is triggered while previous alert window is still active.
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -285,8 +299,7 @@ public class AlarmAlertFullScreen extends Activity {
 
     @Override
     public void onBackPressed() {
-        // Don't allow back to dismiss. This method is overriden by AlarmAlert
-        // so that the dialog is dismissed.
+        // Don't allow back to dismiss. This method is overriden by AlarmAlert so that the dialog is dismissed.
         return;
     }
 }

@@ -23,13 +23,11 @@ import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.BroadcastReceiver;
-import android.database.Cursor;
 import android.os.Parcel;
-import android.support.v4.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,8 +38,7 @@ import java.util.Date;
  */
 public class AlarmReceiver extends BroadcastReceiver {
 
-    /** If the alarm is older than STALE_WINDOW seconds, ignore.  It
-        is probably the result of a time or timezone change */
+    // If the alarm is older than STALE_WINDOW seconds, ignore.
     private final static int STALE_WINDOW = 60 * 30;
 
     @Override
@@ -75,8 +72,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             return;
         }
 
-        // Intentionally verbose: always log the alarm time to provide useful
-        // information in bug reports.
+        // Intentionally verbose: always log the alarm time to provide useful information in bug reports.
         long now = System.currentTimeMillis();
         SimpleDateFormat format =
                 new SimpleDateFormat("HH:mm:ss.SSS aaa");
@@ -90,11 +86,10 @@ public class AlarmReceiver extends BroadcastReceiver {
             return;
         }
 
-        // Maintain a cpu wake lock until the AlarmAlert and AlarmKlaxon can
-        // pick it up.
+        // Maintain a cpu wake lock until the AlarmAlert and AlarmKlaxon can pick it up.
         AlarmAlertWakeLock.acquireCpuWakeLock(context);
 
-        /* Close dialogs and window shade */
+        // Close dialogs and window shade
         Intent closeDialogs = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         context.sendBroadcast(closeDialogs);
 
@@ -107,8 +102,8 @@ public class AlarmReceiver extends BroadcastReceiver {
             c = AlarmAlertFullScreen.class;
         }
 
-        /* launch UI, explicitly stating that this is not due to user action
-         * so that the current app's notification management is not disturbed */
+        // launch UI, explicitly stating that this is not due to user action
+        // so that the current app's notification management is not disturbed
         Intent alarmAlert = new Intent(context, c);
         alarmAlert.putExtra(Alarms.ALARM_INTENT_EXTRA, alarm);
         alarmAlert.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
@@ -143,10 +138,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         // Use the alarm's label or the default label as the ticker text and
         // main text of the notification.
         String label = alarm.getLabelOrDefault(context);
-        /**
-         * Notification n = new Notification(R.drawable.stat_notify_alarm, label, alarm.time);
-         * n.setLatestEventInfo(context, label, context.getString(R.string.alarm_notify_text), pendingNotify);
-         */
+
         Notification n = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.stat_notify_alarm)
                 .setTicker(label)
@@ -187,13 +179,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         PendingIntent intent =
                 PendingIntent.getActivity(context, alarm.id, viewAlarm, 0);
 
-        // Update the notification to indicate that the alert has been
-        // silenced.
+        // Update the notification to indicate that the alert has been silenced.
         String label = alarm.getLabelOrDefault(context);
-        /**
-         * Notification n = new Notification(R.drawable.stat_notify_alarm, label, alarm.time);
-         * n.setLatestEventInfo(context, label, context.getString(R.string.alarm_alert_alert_silenced, timeout), intent);
-         */
+
         Notification n = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.stat_notify_alarm)
                 .setTicker(label)
@@ -204,8 +192,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .build();
         n.flags |= Notification.FLAG_AUTO_CANCEL;
         // We have to cancel the original notification since it is in the
-        // ongoing section and we want the "killed" notification to be a plain
-        // notification.
+        // ongoing section and we want the "killed" notification to be a plain notification.
         nm.cancel(alarm.id);
         nm.notify(alarm.id, n);
     }

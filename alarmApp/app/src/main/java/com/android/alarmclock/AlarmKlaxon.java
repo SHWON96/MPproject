@@ -40,7 +40,7 @@ import android.telephony.TelephonyManager;
  */
 public class AlarmKlaxon extends Service {
 
-    /** Play alarm up to 10 minutes before silencing */
+    // Play alarm up to 10 minutes before silencing
     private static final int ALARM_TIMEOUT_SECONDS = 10 * 60;
 
     private static final long[] sVibratePattern = new long[] { 500, 500 };
@@ -131,8 +131,7 @@ public class AlarmKlaxon extends Service {
 
         play(alarm);
         mCurrentAlarm = alarm;
-        // Record the initial call state here so that the new alarm has the
-        // newest state.
+        // Record the initial call state here so that the new alarm has the newest state.
         mInitialCallState = mTelephonyManager.getCallState();
 
         return START_STICKY;
@@ -160,8 +159,7 @@ public class AlarmKlaxon extends Service {
 
         if (!alarm.silent) {
             Uri alert = alarm.alert;
-            // Fall back on the default alarm if the database does not have an
-            // alarm stored.
+            // Fall back on the default alarm if the database does not have an alarm stored.
             if (alert == null) {
                 alert = RingtoneManager.getDefaultUri(
                         RingtoneManager.TYPE_ALARM);
@@ -197,8 +195,7 @@ public class AlarmKlaxon extends Service {
                 startAlarm(mMediaPlayer);
             } catch (Exception ex) {
                 Log.v("Using the fallback ringtone");
-                // The alert may be on the sd card which could be busy right
-                // now. Use the fallback ringtone.
+                // The alert may be on the sd card which could be busy right now. Use the fallback ringtone.
                 try {
                     // Must reset the media player to clear the error state.
                     mMediaPlayer.reset();
@@ -212,7 +209,7 @@ public class AlarmKlaxon extends Service {
             }
         }
 
-        /* Start the vibrator after everything is ok with the media player */
+        // Start the vibrator after everything is ok with the media player
         if (alarm.vibrate) {
             mVibrator.vibrate(sVibratePattern, 0);
         } else {
@@ -230,7 +227,6 @@ public class AlarmKlaxon extends Service {
                    IllegalStateException {
         final AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         // do not play alarms if stream volume is 0
-        // (typically because ringer mode is silent).
         if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
             player.setAudioStreamType(AudioManager.STREAM_ALARM);
             player.setLooping(true);
@@ -249,10 +245,7 @@ public class AlarmKlaxon extends Service {
         }
     }
 
-    /**
-     * Stops alarm audio and disables alarm if it not snoozed and not
-     * repeating
-     */
+    // Stops alarm audio and disables alarm if it not snoozed and not repeating
     public void stop() {
         if (Log.LOGV) Log.v("AlarmKlaxon.stop()");
         if (mPlaying) {
@@ -271,13 +264,7 @@ public class AlarmKlaxon extends Service {
         disableKiller();
     }
 
-    /**
-     * Kills alarm audio after ALARM_TIMEOUT_SECONDS, so the alarm
-     * won't run all day.
-     *
-     * This just cancels the audio, but leaves the notification
-     * popped, so the user will know that the alarm tripped.
-     */
+    // Kills alarm audio after ALARM_TIMEOUT_SECONDS, so the alarm won't run all day.
     private void enableKiller(Alarm alarm) {
         mHandler.sendMessageDelayed(mHandler.obtainMessage(KILLER, alarm),
                 1000 * ALARM_TIMEOUT_SECONDS);

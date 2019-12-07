@@ -81,19 +81,14 @@ public class Alarms {
     // Shared with DigitalClock
     final static String M24 = "kk:mm";
 
-    /**
-     * Creates a new Alarm.
-     */
+    // Creates a new Alarm.
     public static Uri addAlarm(ContentResolver contentResolver) {
         ContentValues values = new ContentValues();
-        values.put(Alarm.Columns.HOUR, 8);
+        values.put(Alarm.Columns.HOUR, 24);
         return contentResolver.insert(Alarm.Columns.CONTENT_URI, values);
     }
 
-    /**
-     * Removes an existing Alarm.  If this alarm is snoozing, disables
-     * snooze.  Sets next alert.
-     */
+    // Removes an existing Alarm.  If this alarm is snoozing, disables snooze. Sets next alert.
     public static void deleteAlarm(
             Context context, int alarmId) {
 
@@ -107,10 +102,7 @@ public class Alarms {
         setNextAlert(context);
     }
 
-    /**
-     * Queries all alarms
-     * @return cursor over all alarms
-     */
+    // Queries all alarms
     public static Cursor getAlarmsCursor(ContentResolver contentResolver) {
         return contentResolver.query(
                 Alarm.Columns.CONTENT_URI, Alarm.Columns.ALARM_QUERY_COLUMNS,
@@ -125,10 +117,8 @@ public class Alarms {
                 null, null);
     }
 
-    /**
-     * Return an Alarm object representing the alarm id in the database.
-     * Returns null if no alarm exists.
-     */
+    // Return an Alarm object representing the alarm id in the database.
+    // Returns null if no alarm exists.
     public static Alarm getAlarm(ContentResolver contentResolver, int alarmId) {
         Cursor cursor = contentResolver.query(
                 ContentUris.withAppendedId(Alarm.Columns.CONTENT_URI, alarmId),
@@ -145,21 +135,6 @@ public class Alarms {
     }
 
 
-    /**
-     * A convenience method to set an alarm in the Alarms
-     * content provider.
-     *
-     * @param id             corresponds to the _id column
-     * @param enabled        corresponds to the ENABLED column
-     * @param hour           corresponds to the HOUR column
-     * @param minutes        corresponds to the MINUTES column
-     * @param daysOfWeek     corresponds to the DAYS_OF_WEEK column
-     * @param time           corresponds to the ALARM_TIME column
-     * @param vibrate        corresponds to the VIBRATE column
-     * @param message        corresponds to the MESSAGE column
-     * @param alert          corresponds to the ALERT column
-     * @return Time when the alarm will fire.
-     */
     public static long setAlarm(
             Context context, int id, boolean enabled, int hour, int minutes,
             Alarm.DaysOfWeek daysOfWeek, boolean vibrate, String message,
@@ -207,13 +182,6 @@ public class Alarms {
 
         return timeInMillis;
     }
-
-    /**
-     * A convenience method to enable or disable an alarm.
-     *
-     * @param id             corresponds to the _id column
-     * @param enabled        corresponds to the ENABLED column
-     */
 
     public static void enableAlarm(
             final Context context, final int id, boolean enabled) {
@@ -279,10 +247,7 @@ public class Alarms {
         return alarm;
     }
 
-    /**
-     * Disables non-repeating alarms that have passed.  Called at
-     * boot.
-     */
+    // Disables non-repeating alarms that have passed.
     public static void disableExpiredAlarms(final Context context) {
         Cursor cur = getFilteredAlarmsCursor(context.getContentResolver());
         long now = System.currentTimeMillis();
@@ -323,9 +288,6 @@ public class Alarms {
     /**
      * Sets alert in AlarmManger and StatusBar.  This is what will
      * actually launch the alert when the alarm triggers.
-     *
-     * @param alarm Alarm.
-     * @param atTimeInMillis milliseconds since epoch
      */
     private static void enableAlert(Context context, final Alarm alarm,
             final long atTimeInMillis) {
@@ -338,15 +300,6 @@ public class Alarms {
 
         Intent intent = new Intent(ALARM_ALERT_ACTION);
 
-        // XXX: This is a slight hack to avoid an exception in the remote
-        // AlarmManagerService process. The AlarmManager adds extra data to
-        // this Intent which causes it to inflate. Since the remote process
-        // does not know about the Alarm class, it throws a
-        // ClassNotFoundException.
-        //
-        // To avoid this, we marshall the data ourselves and then parcel a plain
-        // byte[] array. The AlarmReceiver class knows to build the Alarm
-        // object from the byte[] array.
         Parcel out = Parcel.obtain();
         alarm.writeToParcel(out, 0);
         out.setDataPosition(0);
@@ -367,8 +320,6 @@ public class Alarms {
 
     /**
      * Disables alert in AlarmManger and StatusBar.
-     *
-     * @param id Alarm ID.
      */
     static void disableAlert(Context context) {
         AlarmManager am = (AlarmManager)
@@ -413,9 +364,11 @@ public class Alarms {
         }
     }
 
-    // Helper to remove the snooze preference. Do not use clear because that
-    // will erase the clock preferences. Also clear the snooze notification in
-    // the window shade.
+    /**
+     * Helper to remove the snooze preference. Do not use clear because that
+     * will erase the clock preferences. Also clear the snooze notification in
+     * the window shade.
+     */
     private static void clearSnoozePreference(final Context context,
             final SharedPreferences prefs) {
         final int alarmId = prefs.getInt(PREF_SNOOZE_ID, -1);
@@ -433,7 +386,6 @@ public class Alarms {
 
     /**
      * If there is a snooze set, enable it in AlarmManager
-     * @return true if snooze is set
      */
     private static boolean enableSnoozeAlert(final Context context) {
         SharedPreferences prefs = context.getSharedPreferences(
@@ -468,9 +420,6 @@ public class Alarms {
     /**
      * Given an alarm in hours and minutes, return a time suitable for
      * setting in AlarmManager.
-     * @param hour Always in 24 hour 0-23
-     * @param minute 0-59
-     * @param daysOfWeek 0-59
      */
     static Calendar calculateAlarm(int hour, int minute, Alarm.DaysOfWeek daysOfWeek) {
 
@@ -492,9 +441,6 @@ public class Alarms {
         c.set(Calendar.MILLISECOND, 0);
 
         int addDays = daysOfWeek.getNextAlarm(c);
-        /* Log.v("** TIMES * " + c.getTimeInMillis() + " hour " + hour +
-           " minute " + minute + " dow " + c.get(Calendar.DAY_OF_WEEK) + " from now " +
-           addDays); */
         if (addDays > 0) c.add(Calendar.DAY_OF_WEEK, addDays);
         return c;
     }
@@ -530,7 +476,7 @@ public class Alarms {
     }
 
     /**
-     * @return true if clock is set to 24-hour mode
+     * return true if clock is set to 24-hour mode
      */
     static boolean get24HourMode(final Context context) {
         return android.text.format.DateFormat.is24HourFormat(context);

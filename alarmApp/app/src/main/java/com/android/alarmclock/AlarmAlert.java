@@ -32,8 +32,7 @@ import android.view.WindowManager;
  */
 public class AlarmAlert extends AlarmAlertFullScreen {
 
-    // If we try to check the keyguard more than 5 times, just launch the full
-    // screen activity.
+    // If we try to check the keyguard more than 5 times, just launch the full screen activity.
     private int mKeyguardRetryCount;
     private final int MAX_KEYGUARD_CHECKS = 5;
 
@@ -59,8 +58,7 @@ public class AlarmAlert extends AlarmAlertFullScreen {
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
-        // Listen for the screen turning off so that when the screen comes back
-        // on, the user does not need to unlock the phone to dismiss the alarm.
+        // Listen for the screen turning off so that when the screen comes back on, the user does not need to unlock the phone to dismiss the alarm.
         registerReceiver(mScreenOffReceiver,
                 new IntentFilter(Intent.ACTION_SCREEN_OFF));
     }

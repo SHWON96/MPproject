@@ -29,8 +29,7 @@ public class RepeatPreference extends ListPreference {
 
     // Initial value that can be set with the values saved in the database.
     private Alarm.DaysOfWeek mDaysOfWeek = new Alarm.DaysOfWeek(0);
-    // New value that will be set if a positive result comes back from the
-    // dialog.
+    // New value that will be set if a positive result comes back from the dialog.
     private Alarm.DaysOfWeek mNewDaysOfWeek = new Alarm.DaysOfWeek(0);
 
     public RepeatPreference(Context context, AttributeSet attrs) {

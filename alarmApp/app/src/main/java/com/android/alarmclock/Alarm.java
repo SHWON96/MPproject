@@ -29,9 +29,9 @@ import java.util.Calendar;
 
 public final class Alarm implements Parcelable {
 
-    //////////////////////////////
-    // Parcelable apis
-    //////////////////////////////
+    /**
+     * Start Parcelable apis
+     */
     public static final Parcelable.Creator<Alarm> CREATOR
             = new Parcelable.Creator<Alarm>() {
                 public Alarm createFromParcel(Parcel p) {
@@ -59,76 +59,44 @@ public final class Alarm implements Parcelable {
         p.writeParcelable(alert, flags);
         p.writeInt(silent ? 1 : 0);
     }
-    //////////////////////////////
-    // end Parcelable apis
-    //////////////////////////////
+    /**
+     * End Parcelable apis
+     */
 
-    //////////////////////////////
-    // Column definitions
-    //////////////////////////////
+    /**
+     * Start Column definitions
+     */
     public static class Columns implements BaseColumns {
-        /**
-         * The content:// style URL for this table
-         */
+         // URL for this table
         public static final Uri CONTENT_URI =
                 Uri.parse("content://com.android.alarmclock/alarm");
 
-        /**
-         * Hour in 24-hour localtime 0 - 23.
-         * <P>Type: INTEGER</P>
-         */
+        // Hour in 24-hour localtime 0 - 23 Type: INTEGER
         public static final String HOUR = "hour";
 
-        /**
-         * Minutes in localtime 0 - 59
-         * <P>Type: INTEGER</P>
-         */
+        // Minutes in localtime 0 - 59 Type: INTEGER
         public static final String MINUTES = "minutes";
 
-        /**
-         * Days of week coded as integer
-         * <P>Type: INTEGER</P>
-         */
+        // Days of week coded as integer Type: INTEGER
         public static final String DAYS_OF_WEEK = "daysofweek";
 
-        /**
-         * Alarm time in UTC milliseconds from the epoch.
-         * <P>Type: INTEGER</P>
-         */
+        // Alarm time in UTC milliseconds from the epoch. Type: INTEGER
         public static final String ALARM_TIME = "alarmtime";
 
-        /**
-         * True if alarm is active
-         * <P>Type: BOOLEAN</P>
-         */
         public static final String ENABLED = "enabled";
 
-        /**
-         * True if alarm should vibrate
-         * <P>Type: BOOLEAN</P>
-         */
         public static final String VIBRATE = "vibrate";
 
-        /**
-         * Message to show when alarm triggers
-         * Note: not currently used
-         * <P>Type: STRING</P>
-         */
         public static final String MESSAGE = "message";
 
-        /**
-         * Audio alert to play when alarm triggers
-         * <P>Type: STRING</P>
-         */
+        // Audio alert to play when alarm triggers Type: STRING
         public static final String ALERT = "alert";
 
-        /**
-         * The default sort order for this table
-         */
+        // Sort order for this table
         public static final String DEFAULT_SORT_ORDER =
                 HOUR + ", " + MINUTES + " ASC";
 
-        // Used when filtering enabled alarms.
+        // Filtering enabled alarms.
         public static final String WHERE_ENABLED = ENABLED + "=1";
 
         static final String[] ALARM_QUERY_COLUMNS = {
@@ -149,9 +117,9 @@ public final class Alarm implements Parcelable {
         public static final int ALARM_MESSAGE_INDEX = 7;
         public static final int ALARM_ALERT_INDEX = 8;
     }
-    //////////////////////////////
-    // End column definitions
-    //////////////////////////////
+    /**
+     * End column definitions
+     */
 
     // Public fields
     public int        id;
@@ -185,8 +153,7 @@ public final class Alarm implements Parcelable {
                 alert = Uri.parse(alertString);
             }
 
-            // If the database alert is null or it failed to parse, use the
-            // default alert.
+            // If the database alert is null or it failed to parse, use the default alert.
             if (alert == null) {
                 alert = RingtoneManager.getDefaultUri(
                         RingtoneManager.TYPE_ALARM);
@@ -316,10 +283,7 @@ public final class Alarm implements Parcelable {
             return mDays != 0;
         }
 
-        /**
-         * returns number of days from today until next alarm
-         * @param c must be set to today
-         */
+        // returns number of days from today until next alarm @param c must be set to today
         public int getNextAlarm(Calendar c) {
             if (mDays == 0) {
                 return -1;

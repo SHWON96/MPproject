@@ -20,12 +20,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.BroadcastReceiver;
 
+/**
+ * Sets alarm on ACTION_BOOT_COMPLETED.  Resets alarm on
+ * TIME_SET, TIMEZONE_CHANGED
+ */
 public class AlarmInitReceiver extends BroadcastReceiver {
 
-    /**
-     * Sets alarm on ACTION_BOOT_COMPLETED.  Resets alarm on
-     * TIME_SET, TIMEZONE_CHANGED
-     */
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
