@@ -91,38 +91,38 @@ public class BorderedText {
     canvas.drawText(text, posX, (posY + textSize), interiorPaint);
   }
 
-  public void drawLines(Canvas canvas, final float posX, final float posY, Vector<String> lines) {
-    int lineNum = 0;
-    for (final String line : lines) {
-      drawText(canvas, posX, posY - getTextSize() * (lines.size() - lineNum - 1), line);
-      ++lineNum;
-    }
-  }
+//  public void drawLines(Canvas canvas, final float posX, final float posY, Vector<String> lines) {
+//    int lineNum = 0;
+//    for (final String line : lines) {
+//      drawText(canvas, posX, posY - getTextSize() * (lines.size() - lineNum - 1), line);
+//      ++lineNum;
+//    }
+//  }
+//
+//  public void setInteriorColor(final int color) {
+//    interiorPaint.setColor(color);
+//  }
 
-  public void setInteriorColor(final int color) {
-    interiorPaint.setColor(color);
-  }
+//  public void setExteriorColor(final int color) {
+//    exteriorPaint.setColor(color);
+//  }
 
-  public void setExteriorColor(final int color) {
-    exteriorPaint.setColor(color);
-  }
+//  public float getTextSize() {
+//    return textSize;
+//  }
 
-  public float getTextSize() {
-    return textSize;
-  }
-
-  public void setAlpha(final int alpha) {
-    interiorPaint.setAlpha(alpha);
-    exteriorPaint.setAlpha(alpha);
-  }
-
-  public void getTextBounds(
-      final String line, final int index, final int count, final Rect lineBounds) {
-    interiorPaint.getTextBounds(line, index, count, lineBounds);
-  }
-
-  public void setTextAlign(final Align align) {
-    interiorPaint.setTextAlign(align);
-    exteriorPaint.setTextAlign(align);
-  }
+//  public void setAlpha(final int alpha) {
+//    interiorPaint.setAlpha(alpha);
+//    exteriorPaint.setAlpha(alpha);
+//  }
+//
+//  public void getTextBounds(
+//      final String line, final int index, final int count, final Rect lineBounds) {
+//    interiorPaint.getTextBounds(line, index, count, lineBounds);
+//  }
+//
+//  public void setTextAlign(final Align align) {
+//    interiorPaint.setTextAlign(align);
+//    exteriorPaint.setTextAlign(align);
+//  }
 }
