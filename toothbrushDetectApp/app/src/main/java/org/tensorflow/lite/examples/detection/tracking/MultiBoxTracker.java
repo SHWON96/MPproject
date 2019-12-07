@@ -155,12 +155,13 @@ public class MultiBoxTracker {
               : String.format("%.2f", (100 * recognition.detectionConfidence));
 
       // Detect only toothbrush
-      if(recognition.title.equals("toothbrush")){
+      //if(recognition.title.equals("toothbrush")){
+
         canvas.drawRoundRect(trackedPos, cornerSize, cornerSize, boxPaint);
         borderedText.drawText(
                 canvas, trackedPos.left + cornerSize, trackedPos.top, recognition.title, boxPaint);
         detectresult = 1;
-      }
+     // }
     }
 
   }
