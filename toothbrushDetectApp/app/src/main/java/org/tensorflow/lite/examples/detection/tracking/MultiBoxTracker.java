@@ -27,14 +27,12 @@ import android.graphics.RectF;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.util.TypedValue;
-import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import org.tensorflow.lite.examples.detection.env.BorderedText;
 import org.tensorflow.lite.examples.detection.env.ImageUtils;
-import org.tensorflow.lite.examples.detection.env.Logger;
 import org.tensorflow.lite.examples.detection.tflite.Classifier.Recognition;
 
 /** A tracker that handles non-max suppression and matches existing objects to new detections. */
@@ -60,7 +58,6 @@ public class MultiBoxTracker {
     Color.parseColor("#0D0068")
   };
   final List<Pair<Float, RectF>> screenRects = new LinkedList<Pair<Float, RectF>>();
-  private final Logger logger = new Logger();
   private final Queue<Integer> availableColors = new LinkedList<Integer>();
   private final List<TrackedRecognition> trackedObjects = new LinkedList<TrackedRecognition>();
   private final Paint boxPaint = new Paint();
@@ -71,10 +68,13 @@ public class MultiBoxTracker {
   private int frameHeight;
   private int sensorOrientation;
 
+
+  // default setting for drawing box
   public MultiBoxTracker(final Context context) {
     for (final int color : COLORS) {
       availableColors.add(color);
     }
+
 
     boxPaint.setColor(Color.RED);
     boxPaint.setStyle(Style.STROKE);
@@ -90,7 +90,7 @@ public class MultiBoxTracker {
   }
 
 
-
+  // set the frame size
   public synchronized void setFrameConfiguration(
       final int width, final int height, final int sensorOrientation) {
     frameWidth = width;
@@ -98,26 +98,9 @@ public class MultiBoxTracker {
     this.sensorOrientation = sensorOrientation;
   }
 
-  public synchronized void drawDebug(final Canvas canvas) {
-    final Paint textPaint = new Paint();
-    textPaint.setColor(Color.WHITE);
-    textPaint.setTextSize(60.0f);
-
-    final Paint boxPaint = new Paint();
-    boxPaint.setColor(Color.RED);
-    boxPaint.setAlpha(200);
-    boxPaint.setStyle(Style.STROKE);
-
-    for (final Pair<Float, RectF> detection : screenRects) {
-      final RectF rect = detection.second;
-      canvas.drawRect(rect, boxPaint);
-      canvas.drawText("" + detection.first, rect.left, rect.top, textPaint);
-      borderedText.drawText(canvas, rect.centerX(), rect.centerY(), "" + detection.first);
-    }
-  }
-
+  // detect and draw line
   public synchronized void trackResults(final List<Recognition> results, final long timestamp) {
-    logger.i("Processing %d results from %d", results.size(), timestamp);
+
     processResults(results);
   }
 
@@ -126,7 +109,7 @@ public class MultiBoxTracker {
   }
 
 
-
+  // draw the line around the detected object
   public synchronized void draw(final Canvas canvas) {
     final boolean rotated = sensorOrientation % 180 == 90;
 
@@ -146,15 +129,9 @@ public class MultiBoxTracker {
       final RectF trackedPos = new RectF(recognition.location);
 
       getFrameToCanvasMatrix().mapRect(trackedPos);
-      //boxPaint.setColor(recognition.color);
 
       float cornerSize = Math.min(trackedPos.width(), trackedPos.height()) / 8.0f;
-      //canvas.drawRoundRect(trackedPos, cornerSize, cornerSize, boxPaint);
 
-      final String labelString =
-          !TextUtils.isEmpty(recognition.title)
-              ? String.format("%s %.2f", recognition.title, (100 * recognition.detectionConfidence))
-              : String.format("%.2f", (100 * recognition.detectionConfidence));
 
       // Detect only toothbrush
       if(recognition.title.equals("toothbrush")){
@@ -167,6 +144,7 @@ public class MultiBoxTracker {
 
   }
 
+  // detect the object and make the frame
   private void processResults(final List<Recognition> results) {
     final List<Pair<Float, Recognition>> rectsToTrack = new LinkedList<Pair<Float, Recognition>>();
 
@@ -182,13 +160,9 @@ public class MultiBoxTracker {
       final RectF detectionScreenRect = new RectF();
       rgbFrameToScreen.mapRect(detectionScreenRect, detectionFrameRect);
 
-      logger.v(
-          "Result! Frame: " + result.getLocation() + " mapped to screen:" + detectionScreenRect);
-
       screenRects.add(new Pair<Float, RectF>(result.getConfidence(), detectionScreenRect));
 
       if (detectionFrameRect.width() < MIN_SIZE || detectionFrameRect.height() < MIN_SIZE) {
-        logger.w("Degenerate rectangle! " + detectionFrameRect);
         continue;
       }
 
@@ -197,10 +171,10 @@ public class MultiBoxTracker {
 
     trackedObjects.clear();
     if (rectsToTrack.isEmpty()) {
-      logger.v("Nothing to track, aborting.");
       return;
     }
 
+    // keep track on
     for (final Pair<Float, Recognition> potential : rectsToTrack) {
       final TrackedRecognition trackedRecognition = new TrackedRecognition();
       trackedRecognition.detectionConfidence = potential.first;
@@ -215,6 +189,7 @@ public class MultiBoxTracker {
     }
 
   }
+
 
   private static class TrackedRecognition {
     RectF location;

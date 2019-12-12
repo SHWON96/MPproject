@@ -35,14 +35,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import org.tensorflow.lite.Interpreter;
-import org.tensorflow.lite.examples.detection.env.Logger;
 
 /**
  * Wrapper for frozen detection models trained using the Tensorflow Object Detection API:
  * github.com/tensorflow/models/tree/master/research/object_detection
  */
 public class TFLiteObjectDetectionAPIModel implements Classifier {
-  private static final Logger LOGGER = new Logger();
+  //private static final Logger LOGGER = new Logger();
 
   // Only return this many results.
   private static final int NUM_DETECTIONS = 10;
@@ -112,7 +111,7 @@ public class TFLiteObjectDetectionAPIModel implements Classifier {
     br = new BufferedReader(new InputStreamReader(labelsInput));
     String line;
     while ((line = br.readLine()) != null) {
-      LOGGER.w(line);
+     // LOGGER.w(line);
       d.labels.add(line);
     }
     br.close();
