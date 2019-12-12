@@ -343,7 +343,7 @@ public class CameraConnectionFragment extends Fragment {
         textureView.setAspectRatio(previewSize.getHeight(), previewSize.getWidth());
       }
     } catch (final CameraAccessException e) {
-      //LOGGER.e(e, "Exception!");
+
     } catch (final NullPointerException e) {
       // Currently an NPE is thrown when the Camera2API is used but not supported on the
       // device this code runs.
@@ -369,7 +369,7 @@ public class CameraConnectionFragment extends Fragment {
       }
       manager.openCamera(cameraId, stateCallback, backgroundHandler);
     } catch (final CameraAccessException e) {
-      //LOGGER.e(e, "Exception!");
+
     } catch (final InterruptedException e) {
       throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
     }
@@ -413,7 +413,7 @@ public class CameraConnectionFragment extends Fragment {
       backgroundThread = null;
       backgroundHandler = null;
     } catch (final InterruptedException e) {
-      //LOGGER.e(e, "Exception!");
+
     }
   }
 
@@ -432,8 +432,6 @@ public class CameraConnectionFragment extends Fragment {
       // We set up a CaptureRequest.Builder with the output Surface.
       previewRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
       previewRequestBuilder.addTarget(surface);
-
-      //LOGGER.i("Opening camera preview: " + previewSize.getWidth() + "x" + previewSize.getHeight());
 
       // Create the reader for the preview frames.
       previewReader =
@@ -471,7 +469,7 @@ public class CameraConnectionFragment extends Fragment {
                 captureSession.setRepeatingRequest(
                     previewRequest, captureCallback, backgroundHandler);
               } catch (final CameraAccessException e) {
-               // LOGGER.e(e, "Exception!");
+
               }
             }
 
@@ -482,7 +480,7 @@ public class CameraConnectionFragment extends Fragment {
           },
           null);
     } catch (final CameraAccessException e) {
-      //LOGGER.e(e, "Exception!");
+
     }
   }
 

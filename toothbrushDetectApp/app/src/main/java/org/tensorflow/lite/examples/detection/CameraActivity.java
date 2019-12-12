@@ -44,21 +44,11 @@ import android.widget.Toast;
 import java.nio.ByteBuffer;
 import org.tensorflow.lite.examples.detection.env.ImageUtils;
 
-import androidx.appcompat.widget.SwitchCompat;
-import android.view.ViewTreeObserver;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 
 public abstract class CameraActivity extends AppCompatActivity implements OnImageAvailableListener, Camera.PreviewCallback, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
-  //private static final Logger LOGGER = new Logger();
-
   private static final int PERMISSIONS_REQUEST = 1;
-
   private static final String PERMISSION_CAMERA = Manifest.permission.CAMERA;
   protected int previewWidth = 0;
   protected int previewHeight = 0;
@@ -73,26 +63,13 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
   private Runnable postInferenceCallback;
   private Runnable imageConverter;
 
-//  private LinearLayout bottomSheetLayout;
-//  private LinearLayout gestureLayout;
-//  private BottomSheetBehavior sheetBehavior;
-//
-//  protected TextView frameValueTextView, cropValueTextView, inferenceTimeTextView;
-//  protected ImageView bottomSheetArrowImageView;
-//  private ImageView plusImageView, minusImageView;
-//  private SwitchCompat apiSwitchCompat;
-//  private TextView threadsTextView;
-
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
-    //LOGGER.d("onCreate " + this);
+
     super.onCreate(null);
     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
     setContentView(R.layout.activity_camera);
-    //Toolbar toolbar = findViewById(R.id.toolbar);
-    //setSupportActionBar(toolbar);
-    //getSupportActionBar().setDisplayShowTitleEnabled(false);
 
     if (hasPermission()) {
       setFragment();
@@ -100,70 +77,6 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
       requestPermission();
     }
 
-//    threadsTextView = findViewById(R.id.threads);
-//    plusImageView = findViewById(R.id.plus);
-//    minusImageView = findViewById(R.id.minus);
-//    apiSwitchCompat = findViewById(R.id.api_info_switch);
-//    bottomSheetLayout = findViewById(R.id.bottom_sheet_layout);
-//    gestureLayout = findViewById(R.id.gesture_layout);
-//    sheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
-//    bottomSheetArrowImageView = findViewById(R.id.bottom_sheet_arrow);
-
-//    ViewTreeObserver vto = gestureLayout.getViewTreeObserver();
-//    vto.addOnGlobalLayoutListener(
-//        new ViewTreeObserver.OnGlobalLayoutListener() {
-//          @Override
-//          public void onGlobalLayout() {
-//            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-//              gestureLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//            } else {
-//              gestureLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//            }
-//            //                int width = bottomSheetLayout.getMeasuredWidth();
-//            int height = gestureLayout.getMeasuredHeight();
-//
-//            sheetBehavior.setPeekHeight(height);
-//          }
-//        });
-//    sheetBehavior.setHideable(false);
-//
-//    sheetBehavior.setBottomSheetCallback(
-//        new BottomSheetBehavior.BottomSheetCallback() {
-//          @Override
-//          public void onStateChanged(@NonNull View bottomSheet, int newState) {
-//            switch (newState) {
-//              case BottomSheetBehavior.STATE_HIDDEN:
-//                break;
-//              case BottomSheetBehavior.STATE_EXPANDED:
-//                {
-//                  bottomSheetArrowImageView.setImageResource(R.drawable.icn_chevron_down);
-//                }
-//                break;
-//              case BottomSheetBehavior.STATE_COLLAPSED:
-//                {
-//                  bottomSheetArrowImageView.setImageResource(R.drawable.icn_chevron_up);
-//                }
-//                break;
-//              case BottomSheetBehavior.STATE_DRAGGING:
-//                break;
-//              case BottomSheetBehavior.STATE_SETTLING:
-//                bottomSheetArrowImageView.setImageResource(R.drawable.icn_chevron_up);
-//                break;
-//            }
-//          }
-//
-//          @Override
-//          public void onSlide(@NonNull View bottomSheet, float slideOffset) {}
-//        });
-
-//    frameValueTextView = findViewById(R.id.frame_info);
-//    cropValueTextView = findViewById(R.id.crop_info);
-//    inferenceTimeTextView = findViewById(R.id.inference_info);
-
-   // apiSwitchCompat.setOnCheckedChangeListener(this);
-
-//    plusImageView.setOnClickListener(this);
-//    minusImageView.setOnClickListener(this);
   }
 
   protected int[] getRgbBytes() {
@@ -171,19 +84,13 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
     return rgbBytes;
   }
 
-  protected int getLuminanceStride() {
-    return yRowStride;
-  }
 
-  protected byte[] getLuminance() {
-    return yuvBytes[0];
-  }
 
-  /** Callback for android.hardware.Camera API */
+
+
   @Override
   public void onPreviewFrame(final byte[] bytes, final Camera camera) {
     if (isProcessingFrame) {
-      //LOGGER.w("Dropping frame!");
       return;
     }
 
@@ -197,7 +104,7 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
         onPreviewSizeChosen(new Size(previewSize.width, previewSize.height), 90);
       }
     } catch (final Exception e) {
-      //LOGGER.e(e, "Exception!");
+
       return;
     }
 
@@ -224,7 +131,8 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
     processImage();
   }
 
-  /** Callback for Camera2 API */
+
+
   @Override
   public void onImageAvailable(final ImageReader reader) {
     // We need wait until we have some size from onPreviewSizeChosen
@@ -234,6 +142,8 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
     if (rgbBytes == null) {
       rgbBytes = new int[previewWidth * previewHeight];
     }
+
+
     try {
       final Image image = reader.acquireLatestImage();
 
@@ -245,6 +155,7 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
         image.close();
         return;
       }
+
       isProcessingFrame = true;
       Trace.beginSection("imageAvailable");
       final Plane[] planes = image.getPlanes();
@@ -253,6 +164,8 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
       final int uvRowStride = planes[1].getRowStride();
       final int uvPixelStride = planes[1].getPixelStride();
 
+
+      // conver image to the YUV format
       imageConverter =
           new Runnable() {
             @Override
@@ -270,6 +183,7 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
             }
           };
 
+      // stop processing frame
       postInferenceCallback =
           new Runnable() {
             @Override
@@ -280,13 +194,16 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
           };
 
       processImage();
+
     } catch (final Exception e) {
-      //LOGGER.e(e, "Exception!");
       Trace.endSection();
       return;
     }
     Trace.endSection();
   }
+
+
+
 
   @Override
   public synchronized void onStart() {
@@ -296,7 +213,6 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
 
   @Override
   public synchronized void onResume() {
-    //LOGGER.d("onResume " + this);
     super.onResume();
 
     handlerThread = new HandlerThread("inference");
@@ -306,15 +222,13 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
 
   @Override
   public synchronized void onPause() {
-    //LOGGER.d("onPause " + this);
-
     handlerThread.quitSafely();
     try {
       handlerThread.join();
       handlerThread = null;
       handler = null;
     } catch (final InterruptedException e) {
-      //LOGGER.e(e, "Exception!");
+
     }
 
     super.onPause();
@@ -322,13 +236,11 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
 
   @Override
   public synchronized void onStop() {
-    //LOGGER.d("onStop " + this);
     super.onStop();
   }
 
   @Override
   public synchronized void onDestroy() {
-    //LOGGER.d("onDestroy " + this);
     super.onDestroy();
   }
 
@@ -338,9 +250,10 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
     }
   }
 
+
+  // check permission and if not, request
   @Override
-  public void onRequestPermissionsResult(
-      final int requestCode, final String[] permissions, final int[] grantResults) {
+  public void onRequestPermissionsResult(final int requestCode, final String[] permissions, final int[] grantResults) {
     if (requestCode == PERMISSIONS_REQUEST) {
       if (grantResults.length > 0
           && grantResults[0] == PackageManager.PERMISSION_GRANTED
@@ -352,6 +265,7 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
     }
   }
 
+  // check about permission
   private boolean hasPermission() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
       return checkSelfPermission(PERMISSION_CAMERA) == PackageManager.PERMISSION_GRANTED;
@@ -360,6 +274,7 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
     }
   }
 
+  // request the permission
   private void requestPermission() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
       if (shouldShowRequestPermissionRationale(PERMISSION_CAMERA)) {
@@ -384,6 +299,7 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
     return requiredLevel <= deviceLevel;
   }
 
+  // get the camera ID which is available
   private String chooseCamera() {
     final CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
     try {
@@ -403,28 +319,29 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
           continue;
         }
 
-        // Fallback to camera1 API for internal cameras that don't have full support.
         // This should help with legacy situations where using the camera2 API causes
         // distorted or otherwise broken previews.
         useCamera2API =
             (facing == CameraCharacteristics.LENS_FACING_EXTERNAL)
                 || isHardwareLevelSupported(
                     characteristics, CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL);
-        //LOGGER.i("Camera API lv2?: %s", useCamera2API);
+
         return cameraId;
       }
     } catch (CameraAccessException e) {
-      //LOGGER.e(e, "Not allowed to access camera");
+
     }
 
     return null;
   }
 
+
+  // set Camera with camera ID
   protected void setFragment() {
     String cameraId = chooseCamera();
 
     Fragment fragment;
-//    if (useCamera2API) {
+
       CameraConnectionFragment camera2Fragment =
               CameraConnectionFragment.newInstance(
                       new CameraConnectionFragment.ConnectionCallback() {
@@ -442,30 +359,24 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
       camera2Fragment.setCamera(cameraId);
       fragment = camera2Fragment;
 
-//    } else {
-//      fragment =
-//          new LegacyCameraConnectionFragment(this, getLayoutId(), getDesiredPreviewFrameSize());
-//    }
 
     getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
   }
 
+
+  //
   protected void fillBytes(final Plane[] planes, final byte[][] yuvBytes) {
     // Because of the variable row stride it's not possible to know in
     // advance the actual necessary dimensions of the yuv planes.
     for (int i = 0; i < planes.length; ++i) {
       final ByteBuffer buffer = planes[i].getBuffer();
       if (yuvBytes[i] == null) {
-        //LOGGER.d("Initializing buffer %d at size %d", i, buffer.capacity());
         yuvBytes[i] = new byte[buffer.capacity()];
       }
       buffer.get(yuvBytes[i]);
     }
   }
 
-  public boolean isDebug() {
-    return debug;
-  }
 
   protected void readyForNextImage() {
     if (postInferenceCallback != null) {
@@ -473,6 +384,7 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
     }
   }
 
+  // change the rotation of the preview
   protected int getScreenOrientation() {
     switch (getWindowManager().getDefaultDisplay().getRotation()) {
       case Surface.ROTATION_270:
@@ -486,45 +398,7 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
     }
   }
 
-//  @Override
-//  public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//    setUseNNAPI(isChecked);
-//    if (isChecked) apiSwitchCompat.setText("NNAPI");
-//    else apiSwitchCompat.setText("TFLITE");
-//  }
 
-//  @Override
-//  public void onClick(View v) {
-//    if (v.getId() == R.id.plus) {
-//      String threads = threadsTextView.getText().toString().trim();
-//      int numThreads = Integer.parseInt(threads);
-//      if (numThreads >= 9) return;
-//      numThreads++;
-//      threadsTextView.setText(String.valueOf(numThreads));
-//      setNumThreads(numThreads);
-//    } else if (v.getId() == R.id.minus) {
-//      String threads = threadsTextView.getText().toString().trim();
-//      int numThreads = Integer.parseInt(threads);
-//      if (numThreads == 1) {
-//        return;
-//      }
-//      numThreads--;
-//      threadsTextView.setText(String.valueOf(numThreads));
-//      setNumThreads(numThreads);
-//    }
-//  }
-//
-//  protected void showFrameInfo(String frameInfo) {
-//    frameValueTextView.setText(frameInfo);
-//  }
-//
-//  protected void showCropInfo(String cropInfo) {
-//    cropValueTextView.setText(cropInfo);
-//  }
-//
-//  protected void showInference(String inferenceTime) {
-//    inferenceTimeTextView.setText(inferenceTime);
-//  }
 
   protected abstract void processImage();
 

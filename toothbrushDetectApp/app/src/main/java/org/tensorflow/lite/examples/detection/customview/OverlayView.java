@@ -23,6 +23,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /** A simple View providing a render callback to other classes. */
+
+// help overlay the draw box on the camera view
+
 public class OverlayView extends View {
   private final List<DrawCallback> callbacks = new LinkedList<DrawCallback>();
 
@@ -30,12 +33,15 @@ public class OverlayView extends View {
     super(context, attrs);
   }
 
+
   public void addCallback(final DrawCallback callback) {
     callbacks.add(callback);
   }
 
+
   @Override
   public synchronized void draw(final Canvas canvas) {
+    super.draw(canvas);
     for (final DrawCallback callback : callbacks) {
       callback.drawCallback(canvas);
     }
