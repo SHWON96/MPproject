@@ -115,7 +115,7 @@ public class MultiBoxTracker {
   }
 
   public synchronized void trackResults(final List<Recognition> results, final long timestamp) {
-    //logger.i("Processing %d results from %d", results.size(), timestamp);
+
     processResults(results);
   }
 
@@ -155,13 +155,15 @@ public class MultiBoxTracker {
               : String.format("%.2f", (100 * recognition.detectionConfidence));
 
       // Detect only toothbrush
-      //if(recognition.title.equals("toothbrush")){
+
+      if(recognition.title.equals("toothbrush")){
 
         canvas.drawRoundRect(trackedPos, cornerSize, cornerSize, boxPaint);
         borderedText.drawText(
                 canvas, trackedPos.left + cornerSize, trackedPos.top, recognition.title, boxPaint);
         detectresult = 1;
-     // }
+
+      }
     }
 
   }
@@ -181,13 +183,9 @@ public class MultiBoxTracker {
       final RectF detectionScreenRect = new RectF();
       rgbFrameToScreen.mapRect(detectionScreenRect, detectionFrameRect);
 
-//      logger.v(
-//          "Result! Frame: " + result.getLocation() + " mapped to screen:" + detectionScreenRect);
-
       screenRects.add(new Pair<Float, RectF>(result.getConfidence(), detectionScreenRect));
 
       if (detectionFrameRect.width() < MIN_SIZE || detectionFrameRect.height() < MIN_SIZE) {
-        //logger.w("Degenerate rectangle! " + detectionFrameRect);
         continue;
       }
 
@@ -200,6 +198,7 @@ public class MultiBoxTracker {
       return;
     }
 
+    // keep tracking
     for (final Pair<Float, Recognition> potential : rectsToTrack) {
       final TrackedRecognition trackedRecognition = new TrackedRecognition();
       trackedRecognition.detectionConfidence = potential.first;

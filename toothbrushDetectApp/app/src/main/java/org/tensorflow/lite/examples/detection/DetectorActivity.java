@@ -243,7 +243,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
   @Override
   public void onClick(View v) {
-
+    Toast.makeText(this,"ttttt",Toast.LENGTH_SHORT).show();
   }
 
   @Override
@@ -266,4 +266,6 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   protected void setNumThreads(final int numThreads) {
     runInBackground(() -> detector.setNumThreads(numThreads));
   }
+
+
 }

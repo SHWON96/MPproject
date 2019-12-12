@@ -171,6 +171,7 @@ public class ImageUtils {
       final int dstWidth,
       final int dstHeight,
       final int applyRotation,
+      
       final boolean maintainAspectRatio) {
     final Matrix matrix = new Matrix();
 
