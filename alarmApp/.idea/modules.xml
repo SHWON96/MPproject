@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/alarmApp.iml" filepath="$PROJECT_DIR$/alarmApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app-detect/app-detect.iml" filepath="$PROJECT_DIR$/app-detect/app-detect.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tensorflow-lite/tensorflow-lite.iml" filepath="$PROJECT_DIR$/tensorflow-lite/tensorflow-lite.iml" />
     </modules>
   </component>
 </project>

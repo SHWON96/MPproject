@@ -13,7 +13,8 @@
         tools:ignore="ProtectedPermissions"/>
 
     <application android:label="@string/app_label"
-                 android:icon="@drawable/ic_launcher_alarmclock">
+                 android:icon="@drawable/ic_launcher_alarmclock"
+        tools:replace="android:icon,android:label">
 
         <provider android:name="AlarmProvider" android:authorities="com.android.alarmclock" />
 
@@ -51,6 +52,16 @@
                 android:launchMode="singleInstance"
                 android:taskAffinity=""
                 android:configChanges="orientation|keyboardHidden|keyboard|navigation"/>
+
+        <activity
+            android:name="org.tensorflow.lite.examples.detection.DetectorActivity"
+            android:label="@string/activity_name_detection"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
 
         <receiver android:name="AlarmReceiver">
             <intent-filter>

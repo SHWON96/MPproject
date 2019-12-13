@@ -49,6 +49,8 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 
 import java.util.Calendar;
 
+import org.tensorflow.lite.examples.detection.DetectorActivity;
+
 /**
  * Alarm Clock alarm alert: pops visible indicator and plays alarm
  * tone. This activity is the full screen version which shows over the lock
@@ -155,7 +157,9 @@ public class AlarmAlertFullScreen extends Activity {
         findViewById(R.id.dismiss).setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-                        dismiss(false);
+                        Intent intent = new Intent(getApplicationContext(), DetectorActivity.class);
+                        startActivity(intent);
+                        // dismiss(false);
                     }
                 });
 
