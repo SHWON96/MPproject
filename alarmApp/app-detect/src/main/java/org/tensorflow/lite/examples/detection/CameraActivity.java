@@ -87,7 +87,7 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
 
 
 
-
+  // process camera preview
   @Override
   public void onPreviewFrame(final byte[] bytes, final Camera camera) {
     if (isProcessingFrame) {
@@ -112,6 +112,7 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
     yuvBytes[0] = bytes;
     yRowStride = previewWidth;
 
+    // conver image to the YUV format
     imageConverter =
         new Runnable() {
           @Override
@@ -133,6 +134,7 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
 
 
 
+  // process image
   @Override
   public void onImageAvailable(final ImageReader reader) {
     // We need wait until we have some size from onPreviewSizeChosen
@@ -364,7 +366,7 @@ public abstract class CameraActivity extends AppCompatActivity implements OnImag
   }
 
 
-  //
+
   protected void fillBytes(final Plane[] planes, final byte[][] yuvBytes) {
     // Because of the variable row stride it's not possible to know in
     // advance the actual necessary dimensions of the yuv planes.

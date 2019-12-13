@@ -84,6 +84,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
   private BorderedText borderedText;
 
+  // set the preview and tracking
   @Override
   public void onPreviewSizeChosen(final Size size, final int rotation) {
     final float textSizePx =
@@ -96,6 +97,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
     int cropSize = TF_OD_API_INPUT_SIZE;
 
+    // ready the tensorflow model
     try {
       detector =
           TFLiteObjectDetectionAPIModel.create(
@@ -104,10 +106,12 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
               TF_OD_API_LABELS_FILE,
               TF_OD_API_INPUT_SIZE,
               TF_OD_API_IS_QUANTIZED);
+
       cropSize = TF_OD_API_INPUT_SIZE;
+
     } catch (final IOException e) {
       e.printStackTrace();
-      //LOGGER.e(e, "Exception initializing classifier!");
+
       Toast toast =
           Toast.makeText(
               getApplicationContext(), "Classifier could not be initialized", Toast.LENGTH_SHORT);
@@ -123,11 +127,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     rgbFrameBitmap = Bitmap.createBitmap(previewWidth, previewHeight, Config.ARGB_8888);
     croppedBitmap = Bitmap.createBitmap(cropSize, cropSize, Config.ARGB_8888);
 
-    frameToCropTransform =
-        ImageUtils.getTransformationMatrix(
-            previewWidth, previewHeight,
-            cropSize, cropSize,
-            sensorOrientation, MAINTAIN_ASPECT);
+    frameToCropTransform = ImageUtils.getTransformationMatrix(previewWidth, previewHeight, cropSize, cropSize, sensorOrientation, MAINTAIN_ASPECT);
 
     cropToFrameTransform = new Matrix();
     frameToCropTransform.invert(cropToFrameTransform);
@@ -138,16 +138,13 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
           @Override
           public void drawCallback(final Canvas canvas) {
             tracker.draw(canvas);
-
-
-
           }
         });
 
     tracker.setFrameConfiguration(previewWidth, previewHeight, sensorOrientation);
   }
 
-  //
+  // process detecting
   @Override
   protected void processImage() {
     ++timestamp;
@@ -234,9 +231,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   }
 
   @Override
-  public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-  }
+  public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {  }
 
   // Which detection model to use: by default uses Tensorflow Object Detection API frozen
   // checkpoints.

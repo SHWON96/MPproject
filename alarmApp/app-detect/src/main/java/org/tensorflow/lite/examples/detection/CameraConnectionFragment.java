@@ -225,22 +225,17 @@ public class CameraConnectionFragment extends Fragment {
       }
     }
 
-//    LOGGER.i("Desired size: " + desiredSize + ", min size: " + minSize + "x" + minSize);
-//    LOGGER.i("Valid preview sizes: [" + TextUtils.join(", ", bigEnough) + "]");
-//    LOGGER.i("Rejected preview sizes: [" + TextUtils.join(", ", tooSmall) + "]");
 
     if (exactSizeFound) {
-      //LOGGER.i("Exact size match found.");
+
       return desiredSize;
     }
 
     // Pick the smallest of those, assuming we found any
     if (bigEnough.size() > 0) {
       final Size chosenSize = Collections.min(bigEnough, new CompareSizesByArea());
-      //LOGGER.i("Chosen size: " + chosenSize.getWidth() + "x" + chosenSize.getHeight());
       return chosenSize;
     } else {
-      //LOGGER.e("Couldn't find any suitable preview size");
       return choices[0];
     }
   }
