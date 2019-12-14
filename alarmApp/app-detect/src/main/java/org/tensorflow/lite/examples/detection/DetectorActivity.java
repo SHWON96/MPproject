@@ -27,6 +27,7 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.media.ImageReader.OnImageAvailableListener;
 import android.os.SystemClock;
+import android.util.Log;
 import android.util.Size;
 import android.util.TypedValue;
 import android.view.View;
@@ -194,9 +195,15 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
             final List<Classifier.Recognition> mappedRecognitions =
                 new LinkedList<Classifier.Recognition>();
 
+
             for (final Classifier.Recognition result : results) {
+
+
               final RectF location = result.getLocation();
-              if (location != null && result.getConfidence() >= minimumConfidence) {
+              if (location != null && result.getConfidence() >= minimumConfidence &&result.getTitle().equals("toothbrush")) {
+
+                Log.v("찾았다 요놈 ","toothbrush");
+
                 canvas.drawRect(location, paint);
 
                 cropToFrameTransform.mapRect(location);
