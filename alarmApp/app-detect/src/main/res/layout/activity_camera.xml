@@ -55,7 +55,7 @@
         android:gravity="center_vertical|center_horizontal"
         android:onClick="onClick"
         android:padding="15dp"
-        android:text="NO TOOTHBRUSH with AD"
+        android:text="NO TOOTHBRUSH AD"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#FFFFFF" />

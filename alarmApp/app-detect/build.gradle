@@ -43,4 +43,5 @@ dependencies {
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly'
+    implementation 'com.google.android.gms:play-services-ads:18.3.0'
 }

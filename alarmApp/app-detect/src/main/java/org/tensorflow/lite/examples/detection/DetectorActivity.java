@@ -16,6 +16,8 @@
 
 package org.tensorflow.lite.examples.detection;
 
+import android.app.NotificationManager;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
@@ -43,6 +45,12 @@ import org.tensorflow.lite.examples.detection.env.ImageUtils;
 import org.tensorflow.lite.examples.detection.tflite.Classifier;
 import org.tensorflow.lite.examples.detection.tflite.TFLiteObjectDetectionAPIModel;
 import org.tensorflow.lite.examples.detection.tracking.MultiBoxTracker;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 /**
  * An activity that uses a TensorFlowMultiBoxDetector and ObjectTracker to detect and then track
@@ -85,9 +93,23 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
   private BorderedText borderedText;
 
+  private InterstitialAd mInterstitialAd;
+
   // set the preview and tracking
   @Override
   public void onPreviewSizeChosen(final Size size, final int rotation) {
+    // Set ads
+    MobileAds.initialize(this, new OnInitializationCompleteListener() {
+      @Override
+      public void onInitializationComplete(InitializationStatus initializationStatus) {}
+    });
+    mInterstitialAd = new InterstitialAd(this);
+    mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+    // For the build and testing, test ad should be set.
+    // For the production
+    // ca-app-pub-8933690005967310/9685842587
+    mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
     final float textSizePx =
         TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP, TEXT_SIZE_DIP, getResources().getDisplayMetrics());
@@ -202,14 +224,20 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
               final RectF location = result.getLocation();
               if (location != null && result.getConfidence() >= minimumConfidence &&result.getTitle().equals("toothbrush")) {
 
-                Log.v("찾았다 요놈 ","toothbrush");
+                // Toothbrush is detected
+                dismissAlarm();
 
+                Toast.makeText(getBaseContext(), "Toothbrush is detected. Alarm dismissed", Toast.LENGTH_SHORT).show();
+                finish();
+
+                /*
                 canvas.drawRect(location, paint);
 
                 cropToFrameTransform.mapRect(location);
 
                 result.setLocation(location);
                 mappedRecognitions.add(result);
+                 */
               }
             }
 
@@ -232,9 +260,14 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     return DESIRED_PREVIEW_SIZE;
   }
 
+  // NO TOOTHBRUSH AD is clicked
   @Override
   public void onClick(View v) {
-    Toast.makeText(this,"ttttt",Toast.LENGTH_SHORT).show();
+    if (mInterstitialAd.isLoaded()) {
+      mInterstitialAd.show();
+      dismissAlarm();
+      finish();
+    }
   }
 
   @Override
@@ -254,6 +287,15 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   @Override
   protected void setNumThreads(final int numThreads) {
     runInBackground(() -> detector.setNumThreads(numThreads));
+  }
+
+  private void dismissAlarm() {
+    Intent intent = getIntent();
+    NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    nm.cancel(intent.getExtras().getInt("alarm_id"));
+    Intent stopAlarm = new Intent("com.android.alarmclock.ALARM_ALERT");
+    stopAlarm.setPackage("com.android.alarmclock");
+    stopService(stopAlarm);
   }
 
 

@@ -158,8 +158,8 @@ public class AlarmAlertFullScreen extends Activity {
                 new Button.OnClickListener() {
                     public void onClick(View v) {
                         Intent intent = new Intent(getApplicationContext(), DetectorActivity.class);
+                        intent.putExtra(Alarms.ALARM_ID, mAlarm.id);
                         startActivity(intent);
-                        // dismiss(false);
                     }
                 });
 
