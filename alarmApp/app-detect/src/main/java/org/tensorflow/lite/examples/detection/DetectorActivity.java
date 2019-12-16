@@ -26,21 +26,17 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.RectF;
-import android.graphics.Typeface;
 import android.media.ImageReader.OnImageAvailableListener;
 import android.os.SystemClock;
-import android.util.Log;
 import android.util.Size;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import org.tensorflow.lite.examples.detection.customview.OverlayView;
-import org.tensorflow.lite.examples.detection.customview.OverlayView.DrawCallback;
-import org.tensorflow.lite.examples.detection.env.BorderedText;
+
+
 import org.tensorflow.lite.examples.detection.env.ImageUtils;
 import org.tensorflow.lite.examples.detection.tflite.Classifier;
 import org.tensorflow.lite.examples.detection.tflite.TFLiteObjectDetectionAPIModel;
@@ -72,7 +68,6 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   private static final Size DESIRED_PREVIEW_SIZE = new Size(640, 480);
   private static final boolean SAVE_PREVIEW_BITMAP = false;
   private static final float TEXT_SIZE_DIP = 10;
-  OverlayView trackingOverlay;
   private Integer sensorOrientation;
 
   private Classifier detector;
@@ -91,7 +86,6 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
   private MultiBoxTracker tracker;
 
-  private BorderedText borderedText;
 
   private InterstitialAd mInterstitialAd;
 
@@ -110,10 +104,6 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     // ca-app-pub-8933690005967310/9685842587
     mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
-    final float textSizePx =
-        TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP, TEXT_SIZE_DIP, getResources().getDisplayMetrics());
-    borderedText = new BorderedText(textSizePx);
 
 
     tracker = new MultiBoxTracker(this);
@@ -155,14 +145,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     cropToFrameTransform = new Matrix();
     frameToCropTransform.invert(cropToFrameTransform);
 
-    trackingOverlay = (OverlayView) findViewById(R.id.tracking_overlay);
-    trackingOverlay.addCallback(
-        new DrawCallback() {
-          @Override
-          public void drawCallback(final Canvas canvas) {
-            tracker.draw(canvas);
-          }
-        });
+
 
     tracker.setFrameConfiguration(previewWidth, previewHeight, sensorOrientation);
   }
@@ -172,7 +155,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   protected void processImage() {
     ++timestamp;
     final long currTimestamp = timestamp;
-    trackingOverlay.postInvalidate();
+
 
     // No mutex needed as this method is not reentrant.
     if (computingDetection) {
@@ -229,23 +212,11 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
                 Toast.makeText(getBaseContext(), "Toothbrush is detected. Alarm dismissed", Toast.LENGTH_SHORT).show();
                 finish();
-
-                /*
-                canvas.drawRect(location, paint);
-
-                cropToFrameTransform.mapRect(location);
-
-                result.setLocation(location);
-                mappedRecognitions.add(result);
-                 */
               }
             }
 
             tracker.trackResults(mappedRecognitions, currTimestamp);
-            trackingOverlay.postInvalidate();
-
             computingDetection = false;
-
           }
         });
   }

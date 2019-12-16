@@ -27,8 +27,7 @@ public class ImageUtils {
   // are normalized to eight bits.
   static final int kMaxChannelValue = 262143;
 
-  @SuppressWarnings("unused")
-  //private static final Logger LOGGER = new Logger();
+
 
   /**
    * Utility method to compute the allocated size in bytes of a YUV420SP image of the given

@@ -31,7 +31,7 @@ import android.util.TypedValue;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import org.tensorflow.lite.examples.detection.env.BorderedText;
+
 import org.tensorflow.lite.examples.detection.env.ImageUtils;
 import org.tensorflow.lite.examples.detection.tflite.Classifier.Recognition;
 
@@ -61,8 +61,7 @@ public class MultiBoxTracker {
   private final Queue<Integer> availableColors = new LinkedList<Integer>();
   private final List<TrackedRecognition> trackedObjects = new LinkedList<TrackedRecognition>();
   private final Paint boxPaint = new Paint();
-  private final float textSizePx;
-  private final BorderedText borderedText;
+
   private Matrix frameToCanvasMatrix;
   private int frameWidth;
   private int frameHeight;
@@ -83,10 +82,7 @@ public class MultiBoxTracker {
     boxPaint.setStrokeJoin(Join.ROUND);
     boxPaint.setStrokeMiter(100);
 
-    textSizePx =
-        TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP, TEXT_SIZE_DIP, context.getResources().getDisplayMetrics());
-    borderedText = new BorderedText(textSizePx);
+
   }
 
 
@@ -109,40 +105,6 @@ public class MultiBoxTracker {
   }
 
 
-  // draw the line around the detected object
-  public synchronized void draw(final Canvas canvas) {
-    final boolean rotated = sensorOrientation % 180 == 90;
-
-    final float multiplier =
-        Math.min(
-            canvas.getHeight() / (float) (rotated ? frameWidth : frameHeight),
-            canvas.getWidth() / (float) (rotated ? frameHeight : frameWidth));
-    frameToCanvasMatrix =
-        ImageUtils.getTransformationMatrix(
-            frameWidth,
-            frameHeight,
-            (int) (multiplier * (rotated ? frameHeight : frameWidth)),
-            (int) (multiplier * (rotated ? frameWidth : frameHeight)),
-            sensorOrientation,
-            false);
-    for (final TrackedRecognition recognition : trackedObjects) {
-      final RectF trackedPos = new RectF(recognition.location);
-
-      getFrameToCanvasMatrix().mapRect(trackedPos);
-
-      float cornerSize = Math.min(trackedPos.width(), trackedPos.height()) / 8.0f;
-
-
-      // Detect only toothbrush
-      if(recognition.title.equals("toothbrush")){
-        canvas.drawRoundRect(trackedPos, cornerSize, cornerSize, boxPaint);
-        borderedText.drawText(
-                canvas, trackedPos.left + cornerSize, trackedPos.top, recognition.title, boxPaint);
-        detectresult = 1;
-      }
-    }
-
-  }
 
   // detect the object and make the frame
   private void processResults(final List<Recognition> results) {
